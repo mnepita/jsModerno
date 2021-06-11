@@ -3,6 +3,7 @@ const carrito = document.querySelector( '#carrito' );
 const contenedorCarrito = document.querySelector( '#lista-carrito tbody' );
 const vaciarCarritoBtn = document.querySelector( '#vaciar-carrito' );
 const listaCursos = document.querySelector( '#lista-cursos' );
+ let cartItems = [];
 
 
 //courses event listener
@@ -11,7 +12,6 @@ function loadEventListeners() {
   listaCursos.addEventListener( 'click', addCourse );
 }
 
-
 /* Functions --------------------------------*/
 function addCourse( e ) {
   e.preventDefault();
@@ -19,9 +19,7 @@ function addCourse( e ) {
   if( e.target.classList.contains( 'agregar-carrito' ) ) {
     const selectedCourse = e.target.parentElement.parentElement;
     readCourseData(selectedCourse )
-    console.log( 'adding to cart' );
   }
-
 }
 
 //read html to extract course info
@@ -30,6 +28,8 @@ function readCourseData( selectedCourse ) {
     image: selectedCourse.querySelector( 'img').src,
     title: selectedCourse.querySelector( '.info-card h4' ).textContent
   }
-  console.log( courseInfo );
+  //add elements to the cartItems's array
+  cartItems = [...cartItems, courseInfo];
+  console.log(cartItems);
 
 }
