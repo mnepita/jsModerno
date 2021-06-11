@@ -4,6 +4,7 @@ const contenedorCarrito = document.querySelector( '#lista-carrito tbody' );
 const vaciarCarritoBtn = document.querySelector( '#vaciar-carrito' );
 const listaCursos = document.querySelector( '#lista-cursos' );
 let cartItems = [];
+ let cartItems = [];
 
 
 //courses event listener
@@ -11,7 +12,6 @@ loadEventListeners()
 function loadEventListeners() {
   listaCursos.addEventListener( 'click', addCourse );
 }
-
 
 /* Functions --------------------------------*/
 function addCourse( e ) {
@@ -21,9 +21,7 @@ function addCourse( e ) {
     const selectedCourse = e.target.parentElement.parentElement;
 
     readCourseData(selectedCourse )
-    console.log( 'adding to cart' );
   }
-
 }
 
 //read html to extract course info
@@ -35,6 +33,9 @@ function readCourseData( selectedCourse ) {
     id: selectedCourse.querySelector('a').getAttribute('data-id'),
     quantity: 1
   }
+  //add elements to the cartItems's array
+  cartItems = [...cartItems, courseInfo];
+  console.log(cartItems);
 
   //add elements to cart
   addToCart(courseInfo);
