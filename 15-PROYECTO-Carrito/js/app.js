@@ -24,12 +24,36 @@ function addCourse( e ) {
 
 //read html to extract course info
 function readCourseData( selectedCourse ) {
-  const courseInfo = {
+   const courseInfo = {
     image: selectedCourse.querySelector( 'img').src,
-    title: selectedCourse.querySelector( '.info-card h4' ).textContent
-  }
-  //add elements to the cartItems's array
-  cartItems = [...cartItems, courseInfo];
-  console.log(cartItems);
+    title: selectedCourse.querySelector( '.info-card h4' ).textContent,
+    price: selectedCourse.querySelector('.precio span').textContent,
+    id: selectedCourse.querySelector('a').getAttribute('data-id'),
+    quantity: 1
 
+  }
+
+  //add elements on the cartItems array to cart
+  addToCart(courseInfo);
+
+}
+
+
+function addToCart(courseInfo) {
+  cartItems = [...cartItems, courseInfo];
+  htmlCartItems();
+}
+
+
+
+// renders cart items on HTML element
+function htmlCartItems() {
+  cartItems.forEach(curso => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+    <td>
+      ${curso.title}
+    </td>
+    `;
+  });
 }
