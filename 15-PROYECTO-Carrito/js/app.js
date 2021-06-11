@@ -3,6 +3,7 @@ const carrito = document.querySelector( '#carrito' );
 const contenedorCarrito = document.querySelector( '#lista-carrito tbody' );
 const vaciarCarritoBtn = document.querySelector( '#vaciar-carrito' );
 const listaCursos = document.querySelector( '#lista-cursos' );
+let cartItems = [];
 
 
 //courses event listener
@@ -18,6 +19,7 @@ function addCourse( e ) {
 
   if( e.target.classList.contains( 'agregar-carrito' ) ) {
     const selectedCourse = e.target.parentElement.parentElement;
+
     readCourseData(selectedCourse )
     console.log( 'adding to cart' );
   }
@@ -28,8 +30,32 @@ function addCourse( e ) {
 function readCourseData( selectedCourse ) {
   const courseInfo = {
     image: selectedCourse.querySelector( 'img').src,
-    title: selectedCourse.querySelector( '.info-card h4' ).textContent
+    title: selectedCourse.querySelector( '.info-card h4' ).textContent,
+    price: selectedCourse.querySelector('.precio span').textContent,
+    id: selectedCourse.querySelector('a').getAttribute('data-id'),
+    quantity: 1
   }
-  console.log( courseInfo );
 
+  //add elements to cart
+  addToCart(courseInfo);
+
+}
+
+function addToCart(courseInfo) {
+ cartItems = [...cartItems, courseInfo];
+  htmlCartItems();
+}
+
+
+
+// renders cart items on HTML element
+function htmlCartItems() {
+  cartItems.forEach( curso => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+    <td>
+      ${curso.title}
+    </td>
+    `;
+  });
 }
