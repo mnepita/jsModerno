@@ -25,7 +25,15 @@ function addCourse( e ) {
   }
 }
 
-function deleteCourse ( ) {
+// deletes course from the cart
+function deleteCourse ( e ) {
+  if( e.target.classList.contains('borrar-curso')) {
+    const courseId = e.target.getAttribute('data-id');
+    // deletes from the array
+    cartItems = cartItems.filter(course => course.id !== courseId);
+    htmlCartItems();
+
+  }
 
 }
 
