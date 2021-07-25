@@ -1,5 +1,5 @@
 /* Variables --------------------------------*/
-const carrito = document.querySelector( '#carrito' );
+const cart = document.querySelector( '#carrito' );
 const contenedorCarrito = document.querySelector( '#lista-carrito tbody' );
 const vaciarCarritoBtn = document.querySelector( '#vaciar-carrito' );
 const listaCursos = document.querySelector( '#lista-cursos' );
@@ -10,6 +10,9 @@ let cartItems = [];
 loadEventListeners()
 function loadEventListeners() {
   listaCursos.addEventListener( 'click', addCourse );
+
+  // delete course from the cartItems
+  cart.addEventListener('click', deleteCourse );
 }
 
 /* Functions --------------------------------*/
@@ -22,6 +25,10 @@ function addCourse( e ) {
   }
 }
 
+function deleteCourse ( ) {
+
+}
+
 //read html to extract course info
 function readCourseData( selectedCourse ) {
    const courseInfo = {
@@ -32,8 +39,25 @@ function readCourseData( selectedCourse ) {
     quantity: 1
   }
 
-  //add elements on the cartItems array to cart
-  addToCart(courseInfo);
+  // check if the course already exists on the cart
+  const courseExists = cartItems.some( course => course.id === courseInfo.id);
+  console.log(courseExists);
+  if(courseExists) {
+    // updates quantity
+    const courses = cartItems.map(course => {
+      if(course.id === courseInfo.id) {
+        course.quantity++;
+        return course;
+      } else {
+        return course;
+      }
+    });
+    cartItems = [...courses];
+
+
+  } else {
+    addToCart(courseInfo);
+  }
 }
 
 function addToCart(courseInfo) {
@@ -48,21 +72,16 @@ function htmlCartItems() {
 
   // iterates cart to generate html
   cartItems.forEach(curso => {
+    const {image, title, price, quantity, id} = curso;
+
     const row = document.createElement('tr');
     row.innerHTML =
     `
-    <td>
-      <img src="${curso.image}">
-    </td>
-    <td>
-      ${curso.title}
-    </td>
-    <td>
-      ${curso.price}
-    </td>
-     <td>
-      ${curso.quantity}
-    </td>
+    <td><img src="${image}"></td>
+    <td>${title}</td>
+    <td>${price}</td>
+    <td>${quantity}</td>
+    <td> <a href="#" class="borrar-curso" data-id="${id}"> X </a></td>
     `;
     // insert html to the cart list tbody
     contenedorCarrito.appendChild(row);
@@ -74,9 +93,7 @@ function htmlCartItems() {
 function cleanHTML() {
   // // metodo lento
   // contenedorCarrito.innerHTML = '';
-
   while(contenedorCarrito.firstChild) {
     contenedorCarrito.removeChild(contenedorCarrito.firstChild);
-
   }
 }
