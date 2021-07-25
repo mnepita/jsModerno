@@ -66,7 +66,7 @@ function readCourseData( selectedCourse ) {
       }
     });
     cartItems = [...courses];
-
+    htmlCartItems();
 
   } else {
     addToCart(courseInfo);
