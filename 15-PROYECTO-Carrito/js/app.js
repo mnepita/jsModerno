@@ -13,6 +13,12 @@ function loadEventListeners() {
 
   // delete course from the cartItems
   cart.addEventListener('click', deleteCourse );
+
+  // clear shopping cart
+  vaciarCarritoBtn.addEventListener( 'click', () => {
+    cartItems = [];
+    htmlCartItems();
+  });
 }
 
 /* Functions --------------------------------*/
@@ -32,10 +38,9 @@ function deleteCourse ( e ) {
     // deletes from the array
     cartItems = cartItems.filter(course => course.id !== courseId);
     htmlCartItems();
-
   }
-
 }
+
 
 //read html to extract course info
 function readCourseData( selectedCourse ) {
