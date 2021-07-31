@@ -1,9 +1,15 @@
 // variables
 const result = document.querySelector('#resultado');
+const carYear = document.querySelector('#year')
+const maxYear = new Date().getFullYear();
+const minYear = maxYear - 10;
 
 //events
-document.addEventListener('DOMContentLoaded', ()=>{
-  showCars();
+document.addEventListener('DOMContentLoaded', () => {
+  showCars(); //show card on load
+
+  // fill year selection
+  showYearSelection();
 });
 
 
@@ -21,4 +27,14 @@ function showCars() {
     result.appendChild(carHTML);
   })
 
+}
+function showYearSelection() {
+  // console.log('year selection loaded');
+  for ( let i = maxYear; i >= minYear; i-- ) {
+    console.log(i);
+    const yearOption = document.createElement('option');
+    yearOption.value = i;
+    yearOption.textContent = i;
+    carYear.appendChild(yearOption); //add year options
+  }
 }
