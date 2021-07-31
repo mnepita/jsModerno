@@ -1,5 +1,6 @@
 // variables
 const btnSend = document.querySelector('#enviar');
+const form = document.querySelector('#enviar-mail');
 
 // variables para inputs
 const email = document.querySelector('#email');
@@ -30,7 +31,30 @@ function validateForm(e) {
   if(e.target.value.length > 0) {
     console.log('no esta vacio');
   } else {
-    e.target.classList.add('border-red-500');
-    alert('todos los campos requeridos');
+    e.target.classList.add('border', 'border-red-500');
+    showError('Todos los campos son obligatorios');
+  }
+
+  if(e.target.type === 'email') {
+    const result = e.target.value.indexOf('@');
+    console.log(result);
+
+    if(result < 0) {
+      console.log('error en email');
+      showError('email invalido');
+    }
+
+  }
+
+}
+
+function showError(message) {
+  const errorMessages = document.createElement('p');
+  errorMessages.textContent = message;
+  errorMessages.classList.add('border', 'border-red-500', 'background-red-100', 'text-red-500', 'p-3', 'mt-5', 'text-center', 'error');
+
+  const errors = document.querySelectorAll('.error');
+  if(errors.length === 0) {
+    form.appendChild(errorMessages);
   }
 }
