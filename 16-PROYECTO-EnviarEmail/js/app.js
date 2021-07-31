@@ -1,4 +1,6 @@
 // variables
+const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 const btnSend = document.querySelector('#enviar');
 const form = document.querySelector('#enviar-mail');
 
@@ -48,8 +50,6 @@ function validateForm(e) {
   if(e.target.type === 'email') {
     // const result = e.target.value.indexOf('@');
     // validate with a regular expression
-    const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
     if(regex.test( e.target.value )) {
       const error = document.querySelector('p.error');
       if(error) {
@@ -64,6 +64,16 @@ function validateForm(e) {
       showError('Ingresa un email valido');
     }
   }
+
+
+  if(regex.test( email.value ) && asunto.value !== '' && mensaje.value !== '' ) {
+    console.log('validation clear');
+    btnSend.disable = false;
+    btnSend.classList.remove('cursor-not-allowed', 'opacity-50');
+  }
+
+
+
 }
 
 function showError(message) {
