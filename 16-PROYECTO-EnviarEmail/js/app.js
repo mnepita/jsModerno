@@ -2,6 +2,7 @@
 const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const btnSend = document.querySelector('#enviar');
+const btnReset = document.querySelector('#resetBtn');
 const form = document.querySelector('#enviar-mail');
 
 // variables para inputs
@@ -19,6 +20,9 @@ function eventListeners() {
   email.addEventListener('blur', validateForm);
   asunto.addEventListener('blur', validateForm);
   mensaje.addEventListener('blur', validateForm);
+
+  // resets the form
+  btnReset.addEventListener('click', resetForm);
 
   // enviar email
   form.addEventListener('submit', sendEmail);
@@ -106,10 +110,16 @@ setTimeout( () => {
   form.insertBefore(message, spinner);
 
   setTimeout( () => {
-    message.remove();
-  }, 3000);
-
+    message.remove(); //clears confirmation message
+    resetForm()
+  }, 5000);
 
 }, 3000 );
 
+}
+
+// clear form
+function resetForm() {
+  form.reset();
+  startApp()
 }
