@@ -32,7 +32,10 @@ function validateForm(e) {
   if(e.target.value.length > 0) {
     // clear errors
     const error = document.querySelector('p.error');
-    error.remove();
+    if(error) {
+      error.remove();
+    }
+
     // console.log('no esta vacio');
     e.target.classList.remove('border-red-500');
     e.target.classList.add('border', 'border-green-500');
@@ -49,7 +52,9 @@ function validateForm(e) {
 
     if(regex.test( e.target.value )) {
       const error = document.querySelector('p.error');
-      error.remove();
+      if(error) {
+        error.remove();
+      }
       // console.log('no esta vacio');
       e.target.classList.remove('border-red-500');
       e.target.classList.add('border', 'border-green-500');
