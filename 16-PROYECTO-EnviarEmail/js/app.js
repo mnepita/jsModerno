@@ -20,6 +20,9 @@ function eventListeners() {
   asunto.addEventListener('blur', validateForm);
   mensaje.addEventListener('blur', validateForm);
 
+  // enviar email
+  form.addEventListener('submit', sendEmail);
+
 }
 
 // funciones
@@ -65,14 +68,11 @@ function validateForm(e) {
     }
   }
 
-
   if(regex.test( email.value ) && asunto.value !== '' && mensaje.value !== '' ) {
     console.log('validation clear');
     btnSend.disable = false;
     btnSend.classList.remove('cursor-not-allowed', 'opacity-50');
   }
-
-
 
 }
 
@@ -85,4 +85,25 @@ function showError(message) {
   if(errors.length === 0) {
     form.appendChild(errorMessages);
   }
+}
+
+// send email
+function sendEmail(e) {
+  e.preventDefault();
+  // console.log('sending email...');
+  const spinner = document.querySelector('#spinner');
+  spinner.style.display = 'flex';
+
+  // after 3 seconds hides the spinner and shows confirmation message
+setTimeout( () => {
+  console.log('fires after 3 seconds');
+  spinner.style.display = 'none';
+  // confirmation message
+  const message = document.createElement('p');
+  message.textContent = 'Email sent';
+  message.classList.add('text-center', 'my-10','p-2', 'bg-green-500', 'text-white', 'font-bold', 'uppercase');
+
+  form.insertBefore(message, spinner);
+}, 3000 );
+
 }
