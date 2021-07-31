@@ -31,7 +31,7 @@ function eventListeners() {
 
 // funciones
 function startApp() {
-  btnSend.disable = true;
+  btnSend.disabled = true;
   btnSend.classList.add('cursor-not-allowed', 'opacity-50');
 }
 
@@ -51,7 +51,7 @@ function validateForm(e) {
   } else {
      e.target.classList.remove('border', 'border-green-500');
     e.target.classList.add('border', 'border-red-500');
-    showError('Todos los campos son obligatorios');
+    showError('All fields required');
   }
 
   if(e.target.type === 'email') {
@@ -68,14 +68,17 @@ function validateForm(e) {
     } else {
       e.target.classList.remove('border', 'border-green-500');
       e.target.classList.add('border', 'border-red-500');
-      showError('Ingresa un email valido');
+      showError('Enter a valid email');
     }
   }
 
   if(regex.test( email.value ) && asunto.value !== '' && mensaje.value !== '' ) {
     console.log('validation clear');
-    btnSend.disable = false;
+    btnSend.disabled = false;
     btnSend.classList.remove('cursor-not-allowed', 'opacity-50');
+  } else{
+      btnEnviar.disabled=true;
+      btnEnviar.classList.add('cursor-not-allowed','opacity-50')
   }
 
 }
