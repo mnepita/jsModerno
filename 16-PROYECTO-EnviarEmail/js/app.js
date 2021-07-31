@@ -104,6 +104,12 @@ setTimeout( () => {
   message.classList.add('text-center', 'my-10','p-2', 'bg-green-500', 'text-white', 'font-bold', 'uppercase');
 
   form.insertBefore(message, spinner);
+
+  setTimeout( () => {
+    message.remove();
+  }, 3000);
+
+
 }, 3000 );
 
 }
