@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function showCars() {
   autos.forEach(car => {
-    const {marca, modelo, year, precio, puertas, transmision, color} = car;
+    const { marca, modelo, year, precio, puertas, transmision, color } = car;
     const carHTML = document.createElement('p');
     carHTML.textContent = `
     ${marca} ${modelo} - ${year} - ${puertas} Puertas - Transmision: ${transmision} - Precio:${precio} - Color: ${color}
