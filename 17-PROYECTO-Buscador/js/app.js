@@ -1,11 +1,10 @@
-// variables
 const result = document.querySelector('#resultado');
 const marca = document.querySelector('#marca');
 const carYear = document.querySelector('#year');
-const minimo = document.querySelector('#minimo');
-const maximo = document.querySelector('#maximo');
+const min = document.querySelector('#minimo');
+const max = document.querySelector('#maximo');
 const transmision = document.querySelector('#transmision');
-const color = document.querySelector('#color');
+const colour = document.querySelector('#colour');
 const maxYear = new Date().getFullYear();
 const minYear = maxYear - 10;
 const searchData = {
@@ -15,7 +14,7 @@ const searchData = {
   max:'',
   puertas: '',
   transmision:'',
-  color:''
+  colour:''
 
 }
 //events
@@ -36,34 +35,41 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   minimo.addEventListener('change', e => {
-    searchData.minimo = e.target.value;
+    searchData.min = e.target.value;
+    carFilter();
   });
 
   maximo.addEventListener('change', e => {
-    searchData.maximo = e.target.value;
+    searchData.max= e.target.value;
+    carFilter();
+  });
+
+  puertas.addEventListener('change', e => {
+    searchData.puertas = parseInt(e.target.value);
+    carFilter();
   });
 
   transmision.addEventListener('change', e => {
-    searchData.t = e.target.value;
+    searchData.transmision = e.target.value;
+    carFilter();
   });
 
-  color.addEventListener('change', e => {
-    searchData.color = e.target.value;
+  colour.addEventListener('change', e => {
+    searchData.colour = e.target.value;
+    carFilter();
   });
-
 });
 
 
 // functions
-
 function showCars(autos) {
   clearHTML();
 
   autos.forEach(car => {
-    const { marca, modelo, year, precio, puertas, transmision, color } = car;
+    const { marca, modelo, year, precio, puertas, transmision, colour } = car;
     const carHTML = document.createElement('p');
     carHTML.textContent = `
-    ${marca} ${modelo} - ${year} - ${puertas} Puertas - Transmision: ${transmision} - Precio:${precio} - Color: ${color}
+    ${marca} ${modelo} - ${year} - ${puertas} Puertas - Transmision: ${transmision} - Precio:${precio} - Colour: ${colour}
     `;
 
     // insert on the html
@@ -90,9 +96,17 @@ function showYearSelection() {
 }
 
 function carFilter() {
-  const resultado = autos.filter( filtrarMarca ).filter( filtrarYear );
-  console.log(resultado);
-  showCars(resultado);
+  clearHTML();
+  const resultado = autos.filter( filtrarMarca ).filter( filtrarYear ).filter(filtrarMinimo).filter(filtrarMaximo).filter(filtrarPuertas).filter(filtrarTransmision).filter(filterByColour);
+  if(resultado.length){
+    console.log(resultado);
+    showCars(resultado);
+  } else {
+    const noResultado = document.createElement( 'div' );
+    noResultado.classList.add('alerta', 'error');
+    noResultado.textContent = 'No hay resultados para la busqueda'
+    result.appendChild(noResultado);
+  }
 }
 
 function filtrarMarca( auto ) {
@@ -109,5 +123,47 @@ function filtrarYear( auto ) {
     return auto.year === year;
   }
   return auto;
-
 }
+
+function filtrarMinimo(auto ) {
+  const {min} = searchData;
+  if(min){
+    return auto.precio >= min;
+  }
+  return auto;
+}
+
+function filtrarMaximo(auto ) {
+  const {max} = searchData;
+  if(max){
+    return auto.precio <= max;
+  }
+  return auto;
+}
+
+
+function filtrarPuertas(auto ) {
+  const {puertas} = searchData;
+  if(puertas){
+    return auto.puertas === puertas;
+  }
+  return auto;
+}
+
+function filtrarTransmision(auto) {
+  const {transmision} = searchData;
+  if(transmision){
+    return auto.transmision === transmision;
+  }
+  return auto;
+}
+
+
+function filterByColour(auto){
+  const {colour} = searchData;
+  if(colour){
+    return auto.colour === colour;
+  }
+  return auto;
+}
+
